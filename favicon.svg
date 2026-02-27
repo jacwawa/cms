@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Fountain icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f2e6d0"/>
+      <stop offset="100%" stop-color="#d9e8e2"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#37a7c5"/>
+      <stop offset="100%" stop-color="#1f6f96"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="url(#bg)"/>
+  <circle cx="32" cy="32" r="29" fill="none" stroke="#9eb7ad" stroke-width="1.2"/>
+
+  <ellipse cx="32" cy="46" rx="20" ry="8" fill="#235b73" opacity="0.2"/>
+  <ellipse cx="32" cy="45" rx="18" ry="6.5" fill="url(#water)"/>
+
+  <rect x="29" y="31" width="6" height="10" rx="2" fill="#5a6c75"/>
+  <circle cx="32" cy="29" r="3.8" fill="#6e828b"/>
+
+  <path d="M32 12 C28 18, 27 23, 27 26 C27 29, 29.2 31, 32 31 C34.8 31, 37 29, 37 26 C37 23, 36 18, 32 12Z" fill="#40b8d4"/>
+  <path d="M24 20 C21 24, 20 27, 20 29 C20 31, 21.6 32.5, 23.7 32.5 C25.8 32.5, 27.4 31, 27.4 29 C27.4 27, 26.6 24, 24 20Z" fill="#77d3e6" opacity="0.95"/>
+  <path d="M40 20 C37.4 24, 36.6 27, 36.6 29 C36.6 31, 38.2 32.5, 40.3 32.5 C42.4 32.5, 44 31, 44 29 C44 27, 43 24, 40 20Z" fill="#77d3e6" opacity="0.95"/>
+
+  <circle cx="24" cy="36" r="1" fill="#c9eef7"/>
+  <circle cx="32" cy="34.5" r="1" fill="#c9eef7"/>
+  <circle cx="40" cy="36" r="1" fill="#c9eef7"/>
+</svg>
