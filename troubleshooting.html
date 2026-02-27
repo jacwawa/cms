@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Troubleshooting | Fountain CMS Onboarding</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body data-page="troubleshooting">
+    <div class="shell">
+      <header class="topbar">
+        <span class="kicker">Fountain Docs</span>
+        <h1>Troubleshooting</h1>
+        <p class="subtitle">Common CMS problems and fast fixes.</p>
+      </header>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="./index.html" data-page="home">Overview</a>
+        <a href="./quickstart.html" data-page="quickstart">Quickstart</a>
+        <a href="./workflows.html" data-page="workflows">Workflows</a>
+        <a href="./troubleshooting.html" data-page="troubleshooting">Troubleshooting</a>
+        <a href="./snippets.html" data-page="snippets">Snippets</a>
+        <a href="./launch-checklist.html" data-page="checklist">Launch Checklist</a>
+      </nav>
+      <main class="content">
+        <section class="panel">
+          <h2>Service Unavailable Error</h2>
+          <p>If only you are seeing it:</p>
+          <ol>
+            <li>Clear browser cache.</li>
+            <li>Open <code>Create New Show</code> and test if it loads.</li>
+            <li>Log out and back in.</li>
+          </ol>
+        </section>
+
+        <section class="panel">
+          <h2>Preview Not Matching Expected Template</h2>
+          <ol>
+            <li>Save the page.</li>
+            <li>Re-open and click Preview.</li>
+            <li>Replace URL path with expected template pattern.</li>
+          </ol>
+        </section>
+
+        <section class="panel">
+          <h2>Broken PDF Link After Upload</h2>
+          <p><strong>Cause:</strong> Asset may have been re-saved and URL changed.</p>
+          <p><strong>Fix:</strong></p>
+          <ol>
+            <li>Open asset record.</li>
+            <li>Copy current <code>File Location</code> URL.</li>
+            <li>Replace broken link in content.</li>
+            <li>Re-test link.</li>
+          </ol>
+        </section>
+
+        <section class="panel">
+          <h2>Missing Show In Search</h2>
+          <ol>
+            <li>Enable <code>Show past shows</code> in filters.</li>
+            <li>Re-run search.</li>
+          </ol>
+        </section>
+
+        <section class="panel">
+          <h2>Ticketing Button Appears Incorrectly</h2>
+          <ol>
+            <li>Verify single-date vs multi-date setup.</li>
+            <li>Single-date: button URL in Ticketing tab.</li>
+            <li>Multi-date: first URL in Basics, date-specific URLs in Dates tab.</li>
+          </ol>
+        </section>
+
+        <section class="panel">
+          <h2>Image Not Correct On Mobile</h2>
+          <ol>
+            <li>Open image asset manager after initial save.</li>
+            <li>Upload alternate mobile image.</li>
+            <li>Re-test on mobile viewport.</li>
+          </ol>
+        </section>
+      </main>
+      <footer class="footer">If an issue persists, capture exact steps and page slug before escalating.</footer>
+    </div>
+  </body>
+</html>

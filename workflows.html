@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workflows | Fountain CMS Onboarding</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body data-page="workflows">
+    <div class="shell">
+      <header class="topbar">
+        <span class="kicker">Fountain Docs</span>
+        <h1>Core Workflows</h1>
+        <p class="subtitle">Task-by-task flows for day-to-day CMS operations.</p>
+      </header>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="./index.html" data-page="home">Overview</a>
+        <a href="./quickstart.html" data-page="quickstart">Quickstart</a>
+        <a href="./workflows.html" data-page="workflows">Workflows</a>
+        <a href="./troubleshooting.html" data-page="troubleshooting">Troubleshooting</a>
+        <a href="./snippets.html" data-page="snippets">Snippets</a>
+        <a href="./launch-checklist.html" data-page="checklist">Launch Checklist</a>
+      </nav>
+      <main class="content">
+        <section class="panel">
+          <h2>A. Create A Show End-To-End</h2>
+          <ol>
+            <li>Create Show in <code>Shows</code>.</li>
+            <li>Fill Title Block (<code>H3</code>, <code>H1</code>, <code>H3_2</code>).</li>
+            <li>Complete date, description, and button URL.</li>
+            <li>Set venue map and organization.</li>
+            <li>Upload image, save, re-open, add caption/credit.</li>
+            <li>Set right-rail controls and tags.</li>
+            <li>Preview on correct template URL.</li>
+            <li>Keep invisible until approved.</li>
+          </ol>
+        </section>
+
+        <section class="panel">
+          <h2>B. Shows vs. Events</h2>
+          <ul>
+            <li>Shows contain full descriptive content.</li>
+            <li>Events are generated instances for performance dates.</li>
+          </ul>
+          <p>If you remove a performance date:</p>
+          <ol>
+            <li>Remove it in the Show.</li>
+            <li>Find and delete the associated Event.</li>
+          </ol>
+        </section>
+
+        <section class="panel">
+          <h2>C. Search Older/Running Shows</h2>
+          <ol>
+            <li>Open show filters.</li>
+            <li>Enable <code>Show past shows</code>.</li>
+            <li>Re-run search.</li>
+          </ol>
+        </section>
+
+        <section class="panel">
+          <h2>D. Link To A Filtered Calendar (Mini-Series)</h2>
+          <p>Use this path format:</p>
+          <pre>/series/lincoln-center-presents/v/calendar/s/Talk</pre>
+          <p>Adjust the final filter term to your intended category.</p>
+        </section>
+
+        <section class="panel">
+          <h2>E. Atrium Template Redirect</h2>
+          <p>For Atrium events, set <code>Button URL</code> to:</p>
+          <pre>/venue/atrium/&lt;show-slug&gt;</pre>
+        </section>
+
+        <section class="panel">
+          <h2>F. Edit Home Page Collection</h2>
+          <p>Home page location:</p>
+          <pre>Collections &gt; Lincoln Center at Home 2.0</pre>
+          <ul>
+            <li>Use consistent date formatting (<code>:00</code>, clean en dashes).</li>
+            <li>Upload alternate mobile image if needed.</li>
+            <li>Add third marketing module via <code>display after highlights</code>.</li>
+          </ul>
+        </section>
+
+        <section class="panel">
+          <h2>G. Upload PDF Assets</h2>
+          <ol>
+            <li>Go to <code>Assets &gt; Create new asset</code>.</li>
+            <li>Choose <code>Upload PDF</code>.</li>
+            <li>Save and copy URL from <code>File Location</code>.</li>
+            <li>Test URL before publishing.</li>
+          </ol>
+          <p class="note">Avoid repeated saves after upload; this can create a new URL and break existing links.</p>
+        </section>
+      </main>
+      <footer class="footer">These workflows map to the onboarding markdown docs.</footer>
+    </div>
+  </body>
+</html>
