@@ -1,0 +1,31 @@
+site_name: Fountain CMS Onboarding
+site_description: Onboarding and operational docs for Fountain CMS
+site_url: https://jacwawa.github.io/cms/
+repo_url: https://github.com/jacwawa/cms
+repo_name: jacwawa/cms
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: teal
+      accent: deep orange
+  features:
+    - navigation.tabs
+    - navigation.top
+    - content.code.copy
+
+nav:
+  - Overview: fountain-onboarding/README.md
+  - Quickstart: fountain-onboarding/quickstart.md
+  - Workflows: fountain-onboarding/workflows.md
+  - Troubleshooting: fountain-onboarding/troubleshooting.md
+  - Snippets: fountain-onboarding/snippets-reference.md
+  - Launch Checklist: fountain-onboarding/launch-checklist.md
+
+markdown_extensions:
+  - admonition
+  - tables
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
