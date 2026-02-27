@@ -157,6 +157,49 @@ pre {
   line-height: 1.45;
 }
 
+.code-block {
+  position: relative;
+  margin: 0.45rem 0 1rem;
+}
+
+.code-block pre {
+  margin: 0;
+  padding-top: 2.5rem;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid rgba(237, 243, 243, 0.4);
+  background: rgba(12, 20, 20, 0.68);
+  color: #edf3f3;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  padding: 0.2rem 0.48rem;
+  cursor: pointer;
+}
+
+.copy-btn svg {
+  width: 0.88rem;
+  height: 0.88rem;
+  fill: currentColor;
+}
+
+.copy-btn:hover,
+.copy-btn:focus-visible {
+  border-color: rgba(237, 243, 243, 0.8);
+  outline: none;
+}
+
+.copy-btn.copied {
+  border-color: rgba(84, 221, 173, 0.9);
+  color: #54ddad;
+}
+
 .note {
   padding: 0.75rem 0.85rem;
   border-left: 4px solid var(--brand);
