@@ -11,16 +11,27 @@ Edit these files only:
 - `docs/fountain-onboarding/workflows.md`
 - `docs/fountain-onboarding/troubleshooting.md`
 - `docs/fountain-onboarding/snippets-reference.md`
+- `docs/fountain-onboarding/photo-guidelines.md`
 - `docs/fountain-onboarding/launch-checklist.md`
 
 The published website is generated from Markdown via MkDocs.
 
-## Publishing Workflow
+## Cloudflare Pages Settings
+
+In Cloudflare Pages, configure:
+
+1. Build command:
+`pip install mkdocs mkdocs-material pymdown-extensions && mkdocs build`
+2. Build output directory:
+`site`
+3. Root directory:
+`/`
+
+## Publish Workflow
 
 1. Commit and push updates to `main`.
-2. GitHub Actions runs `.github/workflows/deploy-docs.yml`.
-3. Action deploys docs to the `gh-pages` branch.
-4. GitHub Pages serves the generated site.
+2. Cloudflare Pages builds from Markdown and deploys the generated `site` output.
+3. GitHub Actions only validates docs build success (`mkdocs build --strict`).
 
 ## Local Preview (optional)
 
@@ -29,6 +40,8 @@ pip install mkdocs mkdocs-material pymdown-extensions
 mkdocs serve
 ```
 
-## Notes
+## Redundancy Notes
 
-- Existing root `.html` files are legacy static output and can be removed once Pages is fully using MkDocs deployment.
+- Existing root `.html` files are legacy static output from the earlier manual site.
+- If Cloudflare is correctly configured with the build command above, these legacy files are not the source of truth.
+- Keep editing only Markdown files in `docs/fountain-onboarding/`.
