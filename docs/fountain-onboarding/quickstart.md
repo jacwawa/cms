@@ -13,7 +13,7 @@ Use this checklist to create and prep your first Show safely.
 7. Click `Duplicate`.
 8. The page may show an error, but if you go to `Fountain > Shows` and sort by `Date Created > Descending`, your show should be there.
 
-## A. Create A Show End-To-End
+## A. Create a Show End-To-End
 
 1. Create Show in `Shows`.
 2. Fill Title Block (`H3`, `H1`, `H3_2`).
