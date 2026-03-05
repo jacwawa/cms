@@ -36,7 +36,7 @@ It is acceptable to go a little over 500 KB when needed to preserve essential im
 
 ## What Makes a Good Crop
 
-- Avoid cropping people or faces in half where possible.
+- For LC photographers, maintain as much of the full photo framing as you can
 - Keep dancers' bodies whole whenever you can.
 - Preserve the most important visual information in frame.
 - Aim for a balanced composition that feels natural and intentional.
@@ -60,6 +60,4 @@ This works best on simple backgrounds (walls, sky, stage floors).
 Composite images combine multiple headshots into one banner.
 
 - Keep head sizes roughly consistent across subjects.
-- Maintain balanced spacing to avoid a crowded layout.
-- Align lighting and color tone as much as possible.
-- Keep the final composition balanced across `1600x900`.
+

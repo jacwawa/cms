@@ -13,22 +13,26 @@ Use this checklist to create and prep your first Show safely.
 7. Click `Duplicate`.
 8. The page may show an error, but if you go to `Fountain > Shows` and sort by `Date Created > Descending`, your show should be there.
 
-## 2. Configure Core Fields
+## A. Create A Show End-To-End
 
-1. `Button URL`:
-- Use a relative URL for internal redirects.
-2. `Venue Map`:
-- Paste Google Maps embed code.
-- If needed, use map snippets from [snippets-reference.md](./snippets-reference.md).
-3. `Organization`:
-- For imported content, prefer `Lincoln Center` unless instructed otherwise.
+1. Create Show in `Shows`.
+2. Fill Title Block (`H3`, `H1`, `H3_2`).
+3. Complete date, description, and button URL.
+4. Set venue map and organization.
+5. Upload image, save, re-open, then add caption/credit.
+6. Set right-rail controls and tags.
+7. Preview on correct template URL.
+8. Keep invisible until approved.
 
-## 3. Add Image Correctly
+## B. Shows vs. Events
 
-1. Upload image in `Image Select`.
-2. Save the Show.
-3. Re-open the Show.
-4. Add image caption and photo credit.
+- Shows contain full descriptive content.
+- Events are generated instances for performance dates.
+- If you remove a performance date:
+1. Remove it in the Show.
+2. Find and delete the associated Event.
+
+
 
 ## 4. Set Right-Rail Controls
 
@@ -47,10 +51,7 @@ Use this checklist to create and prep your first Show safely.
 - Atrium events: `http://preview.lincolncenter.org/venue/atrium/<your-page-slug>`
 - Summer in the City: `http://preview.lincolncenter.org/series/summer-for-the-city/<your-page-slug>`
 
-## 6. Ticketing Setup
 
-- Single date: remove Ticket URL from Basics and put it on Ticketing tab button(s).
-- Multiple dates: add first URL in Basics, then date-specific URLs on Dates tab.
 
 ## 7. Final Pre-Publish Check
 
