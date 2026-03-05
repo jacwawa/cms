@@ -2,9 +2,9 @@
 
 Use this checklist to create and prep your first Show safely.
 
-## 1. Duplicate a Show
+## 1. Create a Show by Duplicating an Existing Show
 
-1. Find a similar show by venue and/or series.
+1. Find a similar show. Choose a recent one with similar venue or series. 
 2. Edit that show and click `Duplicate Event`.
 3. Enter the date and time of the first performance.
 4. Enter the title in the `H1` field using the Source field, so no extra HTML is pasted in.
@@ -12,25 +12,20 @@ Use this checklist to create and prep your first Show safely.
 6. If the H1 title is very long or contains special characters/formatting, enter a clean short slug in `Overwrite Slug`.
 7. Click `Duplicate`.
 8. The page may show an error, but if you go to `Fountain > Shows` and sort by `Date Created > Descending`, your show should be there.
+9. Make sure to check that anything from the previous show you don't need (examples: ticketing links, Fast Track "sold out" tag, Related Shows, Conversational Dates, h2 subtitles) is deleted.
 
 ## A. Create a Show End-To-End
 
 1. Create Show in `Shows`.
 2. Fill Title Block (`H3`, `H1`, `H3_2`).
-3. Complete date, description, and button URL.
+3. Complete date, description, and button URL. 
 4. Set venue map and organization.
 5. Upload image, save, re-open, then add caption/credit.
-6. Set right-rail controls and tags.
+6. Set right-rail controls.
+6. Add tags (`Free`, `Family`, venue, series, genre as applicable).
 7. Preview on correct template URL.
 8. Keep invisible until approved.
 
-## B. Shows vs. Events
-
-- Shows contain full descriptive content.
-- Events are generated instances for performance dates.
-- If you remove a performance date:
-1. Remove it in the Show.
-2. Find and delete the associated Event.
 
 
 
@@ -41,7 +36,7 @@ Use this checklist to create and prep your first Show safely.
 3. `Hide from On Demand`: set `Hide` for live events.
 4. `Enable Add to Calendar`: generally `Enable`.
 5. `Visibility`: keep `Invisible` until approval.
-6. Add tags (`Free`, `Family`, venue, series, genre as applicable).
+
 
 ## 5. Preview Before Launch
 

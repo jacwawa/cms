@@ -5,7 +5,6 @@ Use this before switching visibility to live.
 ## Content
 
 - Show title and supporting H3/H3_2 are complete
-- Date line follows house style (`:00`, clean en dashes)
 - Description reviewed for accuracy
 - Button URL points to correct destination
 

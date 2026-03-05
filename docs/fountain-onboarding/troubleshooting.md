@@ -1,12 +1,14 @@
 # Fountain Troubleshooting
 
-## Service Unavailable Error
 
-If only you are seeing it:
+## B. Shows vs. Events
 
-1. Clear browser cache.
-2. Open `Create New Show` and test if it loads.
-3. Log out and back in.
+- Shows contain full descriptive content.
+- Events are generated instances for performance dates.
+- If you remove or change a performance date make sure to:
+1. Remove it in the Show.
+2. Find and delete the associated Event.
+
 
 ## Preview Not Matching Expected Template
 
@@ -14,18 +16,7 @@ If only you are seeing it:
 2. Re-open and click Preview.
 3. Replace URL path with expected template pattern (Atrium, Summer in the City, venue template).
 
-## Broken PDF Link After Upload
 
-Cause:
-
-- Asset may have been re-saved and URL changed.
-
-Fix:
-
-1. Open asset record.
-2. Copy current `File Location` URL.
-3. Replace broken link in content.
-4. Re-test link.
 
 ## Missing Show In Search
 

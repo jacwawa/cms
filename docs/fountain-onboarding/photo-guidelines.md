@@ -41,7 +41,6 @@ It is acceptable to go a little over 500 KB when needed to preserve essential im
 - Preserve the most important visual information in frame.
 - Aim for a balanced composition that feels natural and intentional.
 
-Each image should be cropped individually. For composition support, use the Rule of Thirds as a reference.
 
 ## Using Content-Aware Fill to Extend a Background
 
@@ -59,5 +58,5 @@ This works best on simple backgrounds (walls, sky, stage floors).
 
 Composite images combine multiple headshots into one banner.
 
-- Keep head sizes roughly consistent across subjects.
+- Keep head sizes roughly consistent across subjects. Save the composite as a PSD so you can make edits if the show changes.
 
