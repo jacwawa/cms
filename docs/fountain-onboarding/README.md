@@ -1,12 +1,6 @@
 # Fountain CMS Onboarding Guide
 
-This guide helps new users become productive in Fountain quickly and safely.
-
-## Audience
-
-- Content editors creating show pages and event listings
-- Publishers preparing and launching content
-- Team members updating collections and home page modules
+Let's get started.
 
 ## How To Use This Guide
 
@@ -14,26 +8,16 @@ This guide helps new users become productive in Fountain quickly and safely.
 2. Follow [Core Workflows](./workflows.md) for common tasks.
 3. Use [Troubleshooting](./troubleshooting.md) if you hit errors.
 4. Copy approved templates from [Snippets and Reference](./snippets-reference.md).
-5. Run [Launch Checklist](./launch-checklist.md) before publishing.
-
-## First Week Outcomes
-
-By the end of week one, a new user should be able to:
-
-- Create a Show and fill required title/date fields
-- Configure right-rail controls safely for launch
-- Add images, captions, and PDF assets correctly
-- Preview content in the correct template URL
-- Apply ticketing setup for single-date and multi-date events
-- Resolve common service/cache and broken-link issues
+5. Follow [Photo Guidelines](./photo-guidelines.md) for crop, format, and composition standards.
+6. Run [Launch Checklist](./launch-checklist.md) before publishing.
 
 ## Fountain Areas You Will Use Most
 
 - `Shows`: create and maintain show pages
-- `Events`: auto-generated instances tied to show dates
-- `Collections`: home page and landing page modules
 - `Assets`: upload images and PDF files
-- `CMS`: San Juan Hill content area
+- `Collections`: home page, series pages, most pages other than shows
+- `Events`: auto-generated instances tied to show dates
+- `CMS`: San Juan Hill and Press content area
 
 ## Important Operating Rules
 
@@ -50,4 +34,5 @@ If your team updates CMS behavior, update these files in the same pull request:
 - [workflows.md](./workflows.md)
 - [troubleshooting.md](./troubleshooting.md)
 - [snippets-reference.md](./snippets-reference.md)
+- [photo-guidelines.md](./photo-guidelines.md)
 - [launch-checklist.md](./launch-checklist.md)

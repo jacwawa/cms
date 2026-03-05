@@ -2,16 +2,16 @@
 
 Use this checklist to create and prep your first Show safely.
 
-## 1. Create The Show
+## 1. Duplicate a Show
 
-1. Go to `Shows > Create New Show`.
-2. Fill Title Block fields:
-- `H3`: series name (usually linked)
-- `H1`: show title
-- `H3_2`: presenting organization (usually linked)
-3. Add `Conversational Date Range` (day/date/time + relevant info).
-4. Add `Description`.
-- If no description is available yet, enter a placeholder space so required validation passes.
+1. Find a similar show by venue and/or series.
+2. Edit that show and click `Duplicate Event`.
+3. Enter the date and time of the first performance.
+4. Enter the title in the `H1` field using the Source field, so no extra HTML is pasted in.
+5. Make sure `Display in Section > Events` and `Hide from On Demand > Yes` are selected.
+6. If the H1 title is very long or contains special characters/formatting, enter a clean short slug in `Overwrite Slug`.
+7. Click `Duplicate`.
+8. The page may show an error, but if you go to `Fountain > Shows` and sort by `Date Created > Descending`, your show should be there.
 
 ## 2. Configure Core Fields
 
