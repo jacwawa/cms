@@ -28,7 +28,7 @@
         <section class="panel">
           <h2>1. Create a Show by Duplicating an Existing Show</h2>
           <ol>
-            <li>Find a similar show. Choose a recent one with a similar venue or series.</li>
+            <li>Find a similar show. Choose a recent one with similar venue or series.</li>
             <li>Edit that show and click <code>Duplicate Event</code>.</li>
             <li>Enter the date and time of the first performance.</li>
             <li>Enter the title in the <code>H1</code> field using the Source field, so no extra HTML is pasted in.</li>
@@ -36,78 +36,64 @@
             <li>If the H1 title is very long or contains special characters/formatting, enter a clean short slug in <code>Overwrite Slug</code>.</li>
             <li>Click <code>Duplicate</code>.</li>
             <li>The page will show an error, but if you go to <code>Fountain &gt; Shows</code> and sort by <code>Date Created &gt; Descending</code>, your show should be there.</li>
-            <li>Remove anything copied over from the previous show that is not needed (for example: ticketing links, Fast Track "sold out" tag, Related Shows, Conversational Dates, H2 subtitles).</li>
+            <li>Make sure to check that anything from the previous show you don't need (examples: ticketing links, Fast Track "sold out" tag, Related Shows, Conversational Dates, h2 subtitles) is deleted.</li>
           </ol>
         </section>
 
         <section class="panel">
-          <h2>2. Edit the Show Content</h2>
+          <h2>A. Editing a Show</h2>
           <ol>
-            <li>Fill Title Block fields (<code>H3</code>, <code>H1</code>, <code>H3_2</code>).</li>
+            <li>Fill Title Block (<code>H3</code>, <code>H1</code>, <code>H3_2</code>).</li>
             <li>Complete date, description, and button URL.</li>
             <li>Set venue map and organization.</li>
-            <li>Upload image, save, then click <code>Set Title/Caption/Credit</code> to add caption/credit.</li>
-            <li>Confirm right-rail controls.</li>
+            <li>Upload image, save, then click to "Set Title/Caption/Credit" to add caption/credit.</li>
+            <li>Confirm all right-rail controls.</li>
             <li>Add tags (<code>Free</code>, <code>Family</code>, venue, series, genre as applicable).</li>
-            <li>Preview on the correct template URL.</li>
-            <li>Keep the show invisible until approved.</li>
+            <li>Preview on correct template URL.</li>
+            <li>Keep invisible until approved.</li>
           </ol>
-        </section>
-
-        <section class="panel">
-          <h2>3. Set Right-Rail Controls</h2>
-          <ol>
-            <li><code>Visibility</code>: keep <code>Invisible</code> until launch.</li>
-            <li><code>Display in Section</code>: set to <code>Events</code> for live events.</li>
-            <li><code>Is Featured</code>: keep <code>No</code>.</li>
-            <li><code>Hide from On Demand</code>: set to <code>Yes</code>.</li>
-            <li><code>Hide from Calendar</code>: generally <code>No</code>.</li>
-            <li><code>Event Type</code>: ignore.</li>
-            <li><code>Is off-site</code>: generally <code>Yes</code>.</li>
-            <li><code>Hide Event to Calendar</code>: generally <code>Display</code>. Use <code>Hide</code> only when you need to remove the Save to Calendar option.</li>
-            <li><code>Disable Link</code>: generally <code>No</code>.</li>
-            <li><code>Hide FT Email Form</code>: generally <code>Display</code>.</li>
-            <li><code>Requires Email signup</code>: generally <code>No</code>.</li>
-            <li><code>Registration Required</code>: generally <code>No</code>.</li>
-            <li><code>Learn More</code>: generally <code>Display</code>.</li>
-          </ol>
-          <p>Additional control guidance:</p>
-          <ul>
-            <li><code>Genre</code>: generally ignore because genres are now set by tags. If it is wrong, correct it or set to <code>n/a</code>.</li>
-            <li><code>Artist Links</code>: ignore.</li>
-            <li><code>Resources</code>: ignore.</li>
-            <li><code>Series Label</code>: generally set to <code>Live Performance</code>.</li>
-            <li><code>Importer controls</code>: generally ignore.</li>
-          </ul>
         </section>
 
         <section class="panel">
           <h2>4. Set Right-Rail Controls</h2>
           <ol>
+            <li>Add relevant tags (Free, Family, venue, series, genre).</li>
+            <li>Visibility: keep it set to Invisible until you are ready to launch.</li>
             <li><code>Display in Section</code>: set to <code>Events</code> for live events.</li>
-            <li><code>Is Featured</code>: keep <code>No</code> unless required.</li>
-            <li><code>Hide from On Demand</code>: set <code>Hide</code> for live events.</li>
-            <li><code>Enable Add to Calendar</code>: generally <code>Enable</code>.</li>
-            <li><code>Visibility</code>: keep <code>Invisible</code> until approval.</li>
-            <li>Add relevant tags (<code>Free</code>, <code>Family</code>, venue, series, genre).</li>
+            <li><code>Is Featured</code>: keep <code>No</code>.</li>
+            <li><code>Hide from On Demand</code>: set to <code>Yes</code>.</li>
+            <li><code>Hide from Calendar</code>: generally <code>No</code>.</li>
+            <li>'Event Type': ignore this.</li>
+            <li><code>Is off-site</code>: generally set to 'Yes'.</li>
+            <li>Hide Event to Calendar: generally set to Display. If you want to hide the "Save to Calendar"feature for any reason, click Hide.</li>
+            <li>Disable Link - generally set to No.</li>
+            <li>Hite FT Email Form : generally set to Display.</li>
+            <li>Requires Email signup: generally set to No.</li>
+            <li>Registration Required: generally set to No.</li>
+            <li>Learn More - generally set to Display.</li>
           </ol>
+          <p>Genre: generally ignore, since genres are set by tags now. if the genre is wrong though, change it to the right one or to n/a.</p>
+          <p>Artist Links: ignore.</p>
+          <p>Resources: ignore.</p>
+          <p>Series Label: generally set to Live Performance.</p>
+          <p>Importer controls: generally ignore.</p>
         </section>
 
         <section class="panel">
-          <h2>4. Preview Before Launch</h2>
+          <h2>5. Preview Before Launch</h2>
           <ol>
             <li>Save content.</li>
             <li>Re-open and click Preview.</li>
-            <li>If template is wrong, use the right preview pattern:</li>
+            <li>If template is wrong, adjust URL pattern:</li>
           </ol>
           <ul>
-            <li>Atrium: <code>http://preview.lincolncenter.org/venue/atrium/&lt;your-page-slug&gt;</code></li>
+            <li>LC Presents events: <code>http://preview.lincolncenter.org/series/lincoln-center-presents/&lt;your-page-slug&gt;</code></li>
             <li>Summer in the City: <code>http://preview.lincolncenter.org/series/summer-for-the-city/&lt;your-page-slug&gt;</code></li>
           </ul>
         </section>
 
         <section class="panel">
-          <h2>5. Final Pre-Publish Check</h2>
+          <h2>7. Final Pre-Publish Check</h2>
           <ul>
             <li>Content copy reviewed</li>
             <li>Image/crop appropriate</li>
