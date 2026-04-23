@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cancel a Show</title>
+    <title>Cancel a Performance</title>
     <style>
       :root {
         --bg: #eef3f7;
@@ -407,7 +407,7 @@
           <section class="status" aria-label="Cancellation steps">
             <div class="status-step active" id="step-show">
               <strong>Step 1</strong>
-              <span>Choose show</span>
+              <span>Choose performance</span>
             </div>
             <div class="status-step" id="step-reason">
               <strong>Step 2</strong>
@@ -425,8 +425,8 @@
 
           <section class="tool">
             <div class="tool-head">
-              <h2 id="panel-title">Choose an upcoming show</h2>
-              <p id="panel-copy">Start with the show. This page is UI-only for now, so the cancellation will be simulated.</p>
+              <h2 id="panel-title">Choose an upcoming performance</h2>
+              <p id="panel-copy">Start with the performance. This page is UI-only for now, so the cancellation will be simulated.</p>
             </div>
             <div class="tool-body" id="panel-body">
               <div id="show-step">
@@ -437,11 +437,11 @@
                 <div class="reason-list">
                   <button class="reason-option" type="button" data-reason="unforeseen">
                     <strong>Unforeseen circumstances</strong>
-                    <span>Due to unforeseen circumstances, this show has been canceled.</span>
+                    <span>Due to unforeseen circumstances, this performance has been canceled.</span>
                   </button>
                   <button class="reason-option" type="button" data-reason="weather">
                     <strong>Weather</strong>
-                    <span>Due to weather, this show has been canceled.</span>
+                    <span>Due to weather, this performance has been canceled.</span>
                   </button>
                 </div>
               </div>
@@ -450,13 +450,13 @@
                 <div class="review">
                   <div class="warning">
                     <strong>Are you sure?</strong>
-                    <p>This will publish a cancellation message for the show below.</p>
+                    <p>This will publish a cancellation message for the performance below.</p>
                   </div>
                   <div class="review-grid">
                     <div class="summary">
-                      <p class="summary-label">Show</p>
-                      <strong id="review-show-name"></strong>
-                      <p id="review-show-meta"></p>
+                      <p class="summary-label">Performance</p>
+                      <strong id="review-performance-name"></strong>
+                      <p id="review-performance-meta"></p>
                     </div>
                     <div class="summary">
                       <p class="summary-label">Cancellation message</p>
@@ -470,15 +470,15 @@
               <div id="done-step" hidden>
                 <div class="success">
                   <div class="success-banner">
-                    <strong id="done-show-name"></strong>
+                    <strong id="done-performance-name"></strong>
                     <p id="done-copy"></p>
                   </div>
                   <div class="links">
-                    <a class="inline-link" id="show-link" href="#" target="_blank" rel="noopener noreferrer">View the canceled show</a>
-                    <a class="inline-link" href="#" id="reset-link">Cancel another show</a>
+                    <a class="inline-link" id="performance-link" href="#" target="_blank" rel="noopener noreferrer">View the canceled performance</a>
+                    <a class="inline-link" href="#" id="reset-link">Cancel another performance</a>
                   </div>
                   <div class="support">
-                    If this show was canceled in error, <a href="mailto:webteam@example.com?subject=Cancellation%20error">contact the web team</a>.
+                    If this performance was canceled in error, <a href="mailto:webteam@example.com?subject=Cancellation%20error">contact the web team</a>.
                   </div>
                 </div>
               </div>
@@ -501,7 +501,7 @@
           venue: "Josie Robertson Plaza",
           series: "Summer for the City",
           datetime: "Thu, Jun 13 at 7:30 PM",
-          href: "https://example.com/shows/summer-stars"
+          href: "https://example.com/performances/summer-stars"
         },
         {
           id: "storm-notes",
@@ -509,7 +509,7 @@
           venue: "David Geffen Hall",
           series: "Lincoln Center Presents",
           datetime: "Fri, Jun 14 at 8:00 PM",
-          href: "https://example.com/shows/storm-notes"
+          href: "https://example.com/performances/storm-notes"
         },
         {
           id: "midnight-dance",
@@ -517,7 +517,7 @@
           venue: "The Appel Room",
           series: "Late Night",
           datetime: "Sat, Jun 15 at 9:00 PM",
-          href: "https://example.com/shows/midnight-dance"
+          href: "https://example.com/performances/midnight-dance"
         },
         {
           id: "family-field-day",
@@ -525,32 +525,32 @@
           venue: "Hearst Plaza",
           series: "Kids and Families",
           datetime: "Sun, Jun 16 at 1:00 PM",
-          href: "https://example.com/shows/family-field-day"
+          href: "https://example.com/performances/family-field-day"
         },
         {
-          id: "atrium-voices",
-          title: "Atrium Voices",
-          venue: "David Rubenstein Atrium",
-          series: "Atrium Presents",
-          datetime: "Tue, Jun 18 at 6:30 PM",
-          href: "https://example.com/shows/atrium-voices"
+          id: "storm-notes-2",
+          title: "Storm Notes with the Festival Orchestra",
+          venue: "David Geffen Hall",
+          series: "Lincoln Center Presents",
+          datetime: "Sat, Jun 15 at 7:30 PM",
+          href: "https://example.com/performances/storm-notes-june-15"
         }
       ];
 
       const reasons = {
         unforeseen: {
           label: "Unforeseen circumstances",
-          copy: "Due to unforeseen circumstances, this show has been canceled."
+          copy: "Due to unforeseen circumstances, this performance has been canceled."
         },
         weather: {
           label: "Weather",
-          copy: "Due to weather, this show has been canceled."
+          copy: "Due to weather, this performance has been canceled."
         }
       };
 
       const state = {
         step: 0,
-        show: null,
+        performance: null,
         reason: null
       };
 
@@ -579,7 +579,7 @@
           const button = document.createElement("button");
           button.type = "button";
           button.className = "show-card";
-          if (state.show && state.show.id === show.id) {
+          if (state.performance && state.performance.id === show.id) {
             button.classList.add("selected");
           }
           button.innerHTML = `
@@ -591,7 +591,7 @@
             <div class="show-detail">${show.datetime}</div>
           `;
           button.addEventListener("click", () => {
-            state.show = show;
+            state.performance = show;
             render();
           });
           showList.appendChild(button);
@@ -606,41 +606,41 @@
       }
 
       function renderReview() {
-        if (!state.show || !state.reason) return;
+        if (!state.performance || !state.reason) return;
         const reason = reasons[state.reason];
-        document.getElementById("review-show-name").textContent = state.show.title;
-        document.getElementById("review-show-meta").textContent = `${state.show.venue} • ${state.show.datetime}`;
+        document.getElementById("review-performance-name").textContent = state.performance.title;
+        document.getElementById("review-performance-meta").textContent = `${state.performance.venue} • ${state.performance.datetime}`;
         document.getElementById("review-reason-label").textContent = reason.label;
         document.getElementById("review-reason-copy").textContent = reason.copy;
       }
 
       function renderDone() {
-        if (!state.show || !state.reason) return;
+        if (!state.performance || !state.reason) return;
         const reason = reasons[state.reason];
-        document.getElementById("done-show-name").textContent = `${state.show.title} canceled`;
+        document.getElementById("done-performance-name").textContent = `${state.performance.title} canceled`;
         document.getElementById("done-copy").textContent = reason.copy;
-        const showLink = document.getElementById("show-link");
-        showLink.href = state.show.href;
-        showLink.textContent = `View ${state.show.title}`;
+        const performanceLink = document.getElementById("performance-link");
+        performanceLink.href = state.performance.href;
+        performanceLink.textContent = `View ${state.performance.title}`;
       }
 
       function updateStepHeader() {
         const headers = [
           {
-            title: "Choose an upcoming show",
-            copy: "Start with the show. This page is UI-only for now, so the cancellation will be simulated."
+            title: "Choose an upcoming performance",
+            copy: "Start with the performance. This page is UI-only for now, so the cancellation will be simulated."
           },
           {
             title: "Choose the cancellation reason",
-            copy: state.show ? `For ${state.show.title}, pick the message that should appear publicly.` : ""
+            copy: state.performance ? `For ${state.performance.title}, pick the message that should appear publicly.` : ""
           },
           {
             title: "Review before canceling",
-            copy: state.show ? `One last check before canceling ${state.show.title}.` : ""
+            copy: state.performance ? `One last check before canceling ${state.performance.title}.` : ""
           },
           {
             title: "Cancellation prepared",
-            copy: "Use the links below to review the show or start another cancellation."
+            copy: "Use the links below to review the performance or start another cancellation."
           }
         ];
 
@@ -667,7 +667,7 @@
         backBtn.hidden = state.step === 0 || state.step === 3;
 
         if (state.step === 0) {
-          nextBtn.disabled = !state.show;
+          nextBtn.disabled = !state.performance;
           nextBtn.textContent = "Continue";
         } else if (state.step === 1) {
           nextBtn.disabled = !state.reason;
@@ -699,7 +699,7 @@
       });
 
       nextBtn.addEventListener("click", () => {
-        if (state.step === 0 && state.show) {
+        if (state.step === 0 && state.performance) {
           state.step = 1;
         } else if (state.step === 1 && state.reason) {
           state.step = 2;
@@ -712,7 +712,7 @@
       resetLink.addEventListener("click", (event) => {
         event.preventDefault();
         state.step = 0;
-        state.show = null;
+        state.performance = null;
         state.reason = null;
         render();
       });
