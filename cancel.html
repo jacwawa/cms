@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cancel a Show</title>
+    <style>
+      :root {
+        --bg: #eef3f7;
+        --ink: #152126;
+        --muted: #58656d;
+        --panel: #ffffff;
+        --line: #d5dde3;
+        --accent: #0d6a6a;
+        --accent-soft: #dff2f0;
+        --danger: #a43838;
+        --danger-soft: #fae4e4;
+        --warning: #f1b33f;
+        --shadow: 0 24px 48px rgba(21, 33, 38, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Avenir Next", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(13, 106, 106, 0.12), transparent 28%),
+          linear-gradient(180deg, #f8fbfc 0%, var(--bg) 100%);
+      }
+
+      a {
+        color: var(--accent);
+      }
+
+      .app {
+        min-height: 100dvh;
+        padding: 20px 16px 36px;
+      }
+
+      .shell {
+        width: min(880px, 100%);
+        margin: 0 auto;
+      }
+
+      .hero {
+        padding: 8px 2px 18px;
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(32px, 7vw, 56px);
+        line-height: 0.98;
+        font-family: "Iowan Old Style", "Palatino Linotype", serif;
+        font-weight: 700;
+      }
+
+      .hero p {
+        margin: 14px 0 0;
+        max-width: 34rem;
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.55;
+      }
+
+      .layout {
+        display: grid;
+        gap: 18px;
+      }
+
+      .status {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .status-step {
+        padding: 12px 12px 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.7);
+      }
+
+      .status-step.active {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+
+      .status-step.done {
+        border-color: #9ec9c4;
+        background: #edf8f6;
+      }
+
+      .status-step strong {
+        display: block;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      .status-step span {
+        display: block;
+        margin-top: 8px;
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .tool {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .tool-head {
+        padding: 18px 18px 10px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .tool-head h2 {
+        margin: 0;
+        font-size: 25px;
+      }
+
+      .tool-head p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .tool-body {
+        padding: 18px;
+      }
+
+      .toolbar {
+        display: grid;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      .search {
+        width: 100%;
+        padding: 14px 15px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        font: inherit;
+        color: var(--ink);
+        background: #fbfcfd;
+      }
+
+      .search:focus,
+      .reason-option:focus-visible,
+      .show-card:focus-visible,
+      .action:focus-visible,
+      .secondary:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      .shows {
+        display: grid;
+        gap: 12px;
+      }
+
+      .show-card {
+        width: 100%;
+        text-align: left;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        cursor: pointer;
+      }
+
+      .show-card.selected {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+
+      .show-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 12px;
+        margin-bottom: 10px;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+      }
+
+      .show-name {
+        font-size: 20px;
+        line-height: 1.15;
+        font-weight: 700;
+      }
+
+      .show-detail {
+        margin-top: 8px;
+        color: var(--muted);
+      }
+
+      .reason-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .reason-option {
+        display: grid;
+        gap: 8px;
+        width: 100%;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .reason-option.selected {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+
+      .reason-option strong {
+        font-size: 18px;
+      }
+
+      .reason-option span {
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .review {
+        display: grid;
+        gap: 16px;
+      }
+
+      .warning {
+        padding: 16px;
+        border-radius: 8px;
+        background: var(--danger-soft);
+        border: 1px solid #efc3c3;
+      }
+
+      .warning strong {
+        display: block;
+        font-size: 22px;
+        line-height: 1.05;
+        color: var(--danger);
+      }
+
+      .review-grid {
+        display: grid;
+        gap: 12px;
+      }
+
+      .summary {
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfcfd;
+      }
+
+      .summary-label {
+        margin: 0 0 8px;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      .summary strong {
+        display: block;
+        font-size: 22px;
+        line-height: 1.1;
+      }
+
+      .summary p {
+        margin: 8px 0 0;
+        color: var(--muted);
+      }
+
+      .success {
+        display: grid;
+        gap: 14px;
+      }
+
+      .success-banner {
+        padding: 18px;
+        border: 1px solid #b9ddcf;
+        border-radius: 8px;
+        background: #edf9f3;
+      }
+
+      .success-banner strong {
+        display: block;
+        font-size: 24px;
+      }
+
+      .success-banner p {
+        margin: 8px 0 0;
+        color: var(--muted);
+      }
+
+      .links {
+        display: grid;
+        gap: 10px;
+      }
+
+      .action-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .action,
+      .secondary {
+        appearance: none;
+        border: 0;
+        border-radius: 999px;
+        padding: 13px 18px;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .action {
+        background: var(--ink);
+        color: #fff;
+      }
+
+      .action[disabled] {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .secondary {
+        background: #eef3f7;
+        color: var(--ink);
+      }
+
+      .inline-link {
+        display: inline-block;
+        margin-top: 8px;
+        font-weight: 700;
+      }
+
+      .support {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+      }
+
+      .support a {
+        font-weight: 700;
+      }
+
+      .empty {
+        padding: 18px;
+        border: 1px dashed var(--line);
+        border-radius: 8px;
+        color: var(--muted);
+        background: #fbfcfd;
+      }
+
+      @media (max-width: 640px) {
+        .app {
+          padding: 14px 12px 28px;
+        }
+
+        .tool-head,
+        .tool-body {
+          padding: 16px;
+        }
+
+        .status {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .show-name,
+        .summary strong {
+          font-size: 18px;
+        }
+
+        .action-row {
+          display: grid;
+        }
+
+        .action,
+        .secondary {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <div class="shell">
+        <header class="hero">
+          <p class="eyebrow">Show Operations</p>
+          <h1>Cancel a Show</h1>
+          <p>Select an upcoming show, choose the cancellation reason, and confirm the message before publishing it.</p>
+        </header>
+
+        <div class="layout">
+          <section class="status" aria-label="Cancellation steps">
+            <div class="status-step active" id="step-show">
+              <strong>Step 1</strong>
+              <span>Choose show</span>
+            </div>
+            <div class="status-step" id="step-reason">
+              <strong>Step 2</strong>
+              <span>Choose reason</span>
+            </div>
+            <div class="status-step" id="step-review">
+              <strong>Step 3</strong>
+              <span>Review</span>
+            </div>
+            <div class="status-step" id="step-finish">
+              <strong>Step 4</strong>
+              <span>Done</span>
+            </div>
+          </section>
+
+          <section class="tool">
+            <div class="tool-head">
+              <h2 id="panel-title">Choose an upcoming show</h2>
+              <p id="panel-copy">Start with the show. This page is UI-only for now, so the cancellation will be simulated.</p>
+            </div>
+            <div class="tool-body" id="panel-body">
+              <div id="show-step">
+                <div class="toolbar">
+                  <input class="search" id="show-search" type="search" placeholder="Search by title, venue, or series" aria-label="Search shows" />
+                </div>
+                <div class="shows" id="show-list"></div>
+              </div>
+
+              <div id="reason-step" hidden>
+                <div class="reason-list">
+                  <button class="reason-option" type="button" data-reason="unforeseen">
+                    <strong>Unforeseen circumstances</strong>
+                    <span>Due to unforeseen circumstances, this show has been canceled.</span>
+                  </button>
+                  <button class="reason-option" type="button" data-reason="weather">
+                    <strong>Weather</strong>
+                    <span>Due to weather, this show has been canceled.</span>
+                  </button>
+                </div>
+              </div>
+
+              <div id="review-step" hidden>
+                <div class="review">
+                  <div class="warning">
+                    <strong>Are you sure?</strong>
+                    <p>This will publish a cancellation message for the show below.</p>
+                  </div>
+                  <div class="review-grid">
+                    <div class="summary">
+                      <p class="summary-label">Show</p>
+                      <strong id="review-show-name"></strong>
+                      <p id="review-show-meta"></p>
+                    </div>
+                    <div class="summary">
+                      <p class="summary-label">Cancellation message</p>
+                      <strong id="review-reason-label"></strong>
+                      <p id="review-reason-copy"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="done-step" hidden>
+                <div class="success">
+                  <div class="success-banner">
+                    <strong id="done-show-name"></strong>
+                    <p id="done-copy"></p>
+                  </div>
+                  <div class="links">
+                    <a class="inline-link" id="show-link" href="#" target="_blank" rel="noopener noreferrer">View the canceled show</a>
+                    <a class="inline-link" href="#" id="reset-link">Cancel another show</a>
+                  </div>
+                  <div class="support">
+                    If this show was canceled in error, <a href="mailto:webteam@example.com?subject=Cancellation%20error">contact the web team</a>.
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-row">
+                <button class="secondary" type="button" id="back-btn" hidden>Back</button>
+                <button class="action" type="button" id="next-btn" disabled>Continue</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const shows = [
+        {
+          id: "summer-stars",
+          title: "Summer Stars: Rooftop Sessions",
+          venue: "Josie Robertson Plaza",
+          series: "Summer for the City",
+          datetime: "Thu, Jun 13 at 7:30 PM",
+          href: "https://example.com/shows/summer-stars"
+        },
+        {
+          id: "storm-notes",
+          title: "Storm Notes with the Festival Orchestra",
+          venue: "David Geffen Hall",
+          series: "Lincoln Center Presents",
+          datetime: "Fri, Jun 14 at 8:00 PM",
+          href: "https://example.com/shows/storm-notes"
+        },
+        {
+          id: "midnight-dance",
+          title: "Midnight Dance Lab",
+          venue: "The Appel Room",
+          series: "Late Night",
+          datetime: "Sat, Jun 15 at 9:00 PM",
+          href: "https://example.com/shows/midnight-dance"
+        },
+        {
+          id: "family-field-day",
+          title: "Family Field Day",
+          venue: "Hearst Plaza",
+          series: "Kids and Families",
+          datetime: "Sun, Jun 16 at 1:00 PM",
+          href: "https://example.com/shows/family-field-day"
+        },
+        {
+          id: "atrium-voices",
+          title: "Atrium Voices",
+          venue: "David Rubenstein Atrium",
+          series: "Atrium Presents",
+          datetime: "Tue, Jun 18 at 6:30 PM",
+          href: "https://example.com/shows/atrium-voices"
+        }
+      ];
+
+      const reasons = {
+        unforeseen: {
+          label: "Unforeseen circumstances",
+          copy: "Due to unforeseen circumstances, this show has been canceled."
+        },
+        weather: {
+          label: "Weather",
+          copy: "Due to weather, this show has been canceled."
+        }
+      };
+
+      const state = {
+        step: 0,
+        show: null,
+        reason: null,
+        query: ""
+      };
+
+      const stepEls = [
+        document.getElementById("step-show"),
+        document.getElementById("step-reason"),
+        document.getElementById("step-review"),
+        document.getElementById("step-finish")
+      ];
+
+      const panelTitle = document.getElementById("panel-title");
+      const panelCopy = document.getElementById("panel-copy");
+      const showStep = document.getElementById("show-step");
+      const reasonStep = document.getElementById("reason-step");
+      const reviewStep = document.getElementById("review-step");
+      const doneStep = document.getElementById("done-step");
+      const showList = document.getElementById("show-list");
+      const searchInput = document.getElementById("show-search");
+      const nextBtn = document.getElementById("next-btn");
+      const backBtn = document.getElementById("back-btn");
+      const resetLink = document.getElementById("reset-link");
+
+      function filteredShows() {
+        const query = state.query.trim().toLowerCase();
+        if (!query) return shows;
+        return shows.filter((show) =>
+          [show.title, show.venue, show.series, show.datetime].some((value) =>
+            value.toLowerCase().includes(query)
+          )
+        );
+      }
+
+      function renderShows() {
+        const items = filteredShows();
+        showList.innerHTML = "";
+
+        if (!items.length) {
+          const empty = document.createElement("div");
+          empty.className = "empty";
+          empty.textContent = "No upcoming shows match that search.";
+          showList.appendChild(empty);
+          return;
+        }
+
+        items.forEach((show) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "show-card";
+          if (state.show && state.show.id === show.id) {
+            button.classList.add("selected");
+          }
+          button.innerHTML = `
+            <div class="show-meta">
+              <span>${show.venue}</span>
+              <span>${show.series}</span>
+            </div>
+            <div class="show-name">${show.title}</div>
+            <div class="show-detail">${show.datetime}</div>
+          `;
+          button.addEventListener("click", () => {
+            state.show = show;
+            render();
+          });
+          showList.appendChild(button);
+        });
+      }
+
+      function renderReasons() {
+        document.querySelectorAll(".reason-option").forEach((button) => {
+          const selected = state.reason === button.dataset.reason;
+          button.classList.toggle("selected", selected);
+        });
+      }
+
+      function renderReview() {
+        if (!state.show || !state.reason) return;
+        const reason = reasons[state.reason];
+        document.getElementById("review-show-name").textContent = state.show.title;
+        document.getElementById("review-show-meta").textContent = `${state.show.venue} • ${state.show.datetime}`;
+        document.getElementById("review-reason-label").textContent = reason.label;
+        document.getElementById("review-reason-copy").textContent = reason.copy;
+      }
+
+      function renderDone() {
+        if (!state.show || !state.reason) return;
+        const reason = reasons[state.reason];
+        document.getElementById("done-show-name").textContent = `${state.show.title} canceled`;
+        document.getElementById("done-copy").textContent = reason.copy;
+        const showLink = document.getElementById("show-link");
+        showLink.href = state.show.href;
+        showLink.textContent = `View ${state.show.title}`;
+      }
+
+      function updateStepHeader() {
+        const headers = [
+          {
+            title: "Choose an upcoming show",
+            copy: "Start with the show. This page is UI-only for now, so the cancellation will be simulated."
+          },
+          {
+            title: "Choose the cancellation reason",
+            copy: state.show ? `For ${state.show.title}, pick the message that should appear publicly.` : ""
+          },
+          {
+            title: "Review before canceling",
+            copy: state.show ? `One last check before canceling ${state.show.title}.` : ""
+          },
+          {
+            title: "Cancellation prepared",
+            copy: "Use the links below to review the show or start another cancellation."
+          }
+        ];
+
+        panelTitle.textContent = headers[state.step].title;
+        panelCopy.textContent = headers[state.step].copy;
+      }
+
+      function render() {
+        renderShows();
+        renderReasons();
+        renderReview();
+        renderDone();
+        updateStepHeader();
+
+        [showStep, reasonStep, reviewStep, doneStep].forEach((el, index) => {
+          el.hidden = index !== state.step;
+        });
+
+        stepEls.forEach((el, index) => {
+          el.classList.toggle("active", index === state.step);
+          el.classList.toggle("done", index < state.step);
+        });
+
+        backBtn.hidden = state.step === 0 || state.step === 3;
+
+        if (state.step === 0) {
+          nextBtn.disabled = !state.show;
+          nextBtn.textContent = "Continue";
+        } else if (state.step === 1) {
+          nextBtn.disabled = !state.reason;
+          nextBtn.textContent = "Review cancellation";
+        } else if (state.step === 2) {
+          nextBtn.disabled = false;
+          nextBtn.textContent = "Confirm cancellation";
+        } else {
+          nextBtn.hidden = true;
+        }
+
+        if (state.step < 3) {
+          nextBtn.hidden = false;
+        }
+      }
+
+      searchInput.addEventListener("input", (event) => {
+        state.query = event.target.value;
+        renderShows();
+      });
+
+      document.querySelectorAll(".reason-option").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.reason = button.dataset.reason;
+          render();
+        });
+      });
+
+      backBtn.addEventListener("click", () => {
+        if (state.step > 0) {
+          state.step -= 1;
+          render();
+        }
+      });
+
+      nextBtn.addEventListener("click", () => {
+        if (state.step === 0 && state.show) {
+          state.step = 1;
+        } else if (state.step === 1 && state.reason) {
+          state.step = 2;
+        } else if (state.step === 2) {
+          state.step = 3;
+        }
+        render();
+      });
+
+      resetLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        state.step = 0;
+        state.show = null;
+        state.reason = null;
+        state.query = "";
+        searchInput.value = "";
+        render();
+      });
+
+      render();
+    </script>
+  </body>
+</html>
