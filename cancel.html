@@ -146,23 +146,6 @@
         padding: 18px;
       }
 
-      .toolbar {
-        display: grid;
-        gap: 10px;
-        margin-bottom: 14px;
-      }
-
-      .search {
-        width: 100%;
-        padding: 14px 15px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        font: inherit;
-        color: var(--ink);
-        background: #fbfcfd;
-      }
-
-      .search:focus,
       .reason-option:focus-visible,
       .show-card:focus-visible,
       .action:focus-visible,
@@ -447,9 +430,6 @@
             </div>
             <div class="tool-body" id="panel-body">
               <div id="show-step">
-                <div class="toolbar">
-                  <input class="search" id="show-search" type="search" placeholder="Search by title, venue, or series" aria-label="Search shows" />
-                </div>
                 <div class="shows" id="show-list"></div>
               </div>
 
@@ -571,8 +551,7 @@
       const state = {
         step: 0,
         show: null,
-        reason: null,
-        query: ""
+        reason: null
       };
 
       const stepEls = [
@@ -589,34 +568,14 @@
       const reviewStep = document.getElementById("review-step");
       const doneStep = document.getElementById("done-step");
       const showList = document.getElementById("show-list");
-      const searchInput = document.getElementById("show-search");
       const nextBtn = document.getElementById("next-btn");
       const backBtn = document.getElementById("back-btn");
       const resetLink = document.getElementById("reset-link");
 
-      function filteredShows() {
-        const query = state.query.trim().toLowerCase();
-        if (!query) return shows;
-        return shows.filter((show) =>
-          [show.title, show.venue, show.series, show.datetime].some((value) =>
-            value.toLowerCase().includes(query)
-          )
-        );
-      }
-
       function renderShows() {
-        const items = filteredShows();
         showList.innerHTML = "";
 
-        if (!items.length) {
-          const empty = document.createElement("div");
-          empty.className = "empty";
-          empty.textContent = "No upcoming shows match that search.";
-          showList.appendChild(empty);
-          return;
-        }
-
-        items.forEach((show) => {
+        shows.forEach((show) => {
           const button = document.createElement("button");
           button.type = "button";
           button.className = "show-card";
@@ -725,11 +684,6 @@
         }
       }
 
-      searchInput.addEventListener("input", (event) => {
-        state.query = event.target.value;
-        renderShows();
-      });
-
       document.querySelectorAll(".reason-option").forEach((button) => {
         button.addEventListener("click", () => {
           state.reason = button.dataset.reason;
@@ -760,8 +714,6 @@
         state.step = 0;
         state.show = null;
         state.reason = null;
-        state.query = "";
-        searchInput.value = "";
         render();
       });
 
