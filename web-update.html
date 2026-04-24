@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Request a Website Update</title>
+    <style>
+      :root {
+        --bg: #f4f7fb;
+        --surface: #ffffff;
+        --surface-soft: #f8fbfd;
+        --ink: #17242c;
+        --muted: #5d6b74;
+        --line: #d8e0e7;
+        --accent: #116d67;
+        --accent-soft: #ddf3ef;
+        --warn: #9f5f0f;
+        --warn-soft: #fff1dc;
+        --alert: #7c2d2d;
+        --alert-soft: #fae4e4;
+        --shadow: 0 22px 48px rgba(23, 36, 44, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Avenir Next", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top right, rgba(17, 109, 103, 0.12), transparent 28%),
+          linear-gradient(180deg, #fbfcfe 0%, var(--bg) 100%);
+      }
+
+      a {
+        color: var(--accent);
+      }
+
+      .app {
+        min-height: 100dvh;
+        padding: 22px 16px 36px;
+      }
+
+      .shell {
+        width: min(1120px, 100%);
+        margin: 0 auto;
+      }
+
+      .hero {
+        margin-bottom: 22px;
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--accent);
+      }
+
+      h1 {
+        margin: 0;
+        font-family: "Iowan Old Style", "Palatino Linotype", serif;
+        font-size: clamp(34px, 6vw, 58px);
+        line-height: 0.96;
+      }
+
+      .hero p {
+        max-width: 40rem;
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.6;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+        gap: 18px;
+      }
+
+      .panel,
+      .summary {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+      }
+
+      .panel-head,
+      .summary-head {
+        padding: 18px 18px 12px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .panel-head h2,
+      .summary-head h2 {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .panel-head p,
+      .summary-head p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .panel-body,
+      .summary-body {
+        padding: 18px;
+      }
+
+      .field-grid {
+        display: grid;
+        gap: 16px;
+      }
+
+      .two-up {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      .field-note {
+        display: block;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fcfdff;
+        color: var(--ink);
+        font: inherit;
+      }
+
+      input,
+      select {
+        min-height: 48px;
+        padding: 12px 14px;
+      }
+
+      textarea {
+        min-height: 160px;
+        padding: 14px;
+        resize: vertical;
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus,
+      .urgency-option:focus-visible,
+      .toggle:focus-visible,
+      .button:focus-visible,
+      .secondary:focus-visible,
+      .upload-card:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      .urgency-wrap {
+        display: grid;
+        gap: 10px;
+      }
+
+      .urgency-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .urgency-option {
+        width: 100%;
+        padding: 14px;
+        text-align: left;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        cursor: pointer;
+      }
+
+      .urgency-option.active {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+
+      .urgency-option strong {
+        display: block;
+        font-size: 18px;
+      }
+
+      .urgency-option span {
+        display: block;
+        margin-top: 6px;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .urgency-help {
+        padding: 14px;
+        border: 1px solid #f0d6ab;
+        border-radius: 8px;
+        background: var(--warn-soft);
+        color: #6e5319;
+        line-height: 1.5;
+      }
+
+      .upload-card {
+        position: relative;
+        padding: 18px;
+        border: 1px dashed #a9bbc9;
+        border-radius: 8px;
+        background: var(--surface-soft);
+      }
+
+      .upload-card strong {
+        display: block;
+        font-size: 17px;
+      }
+
+      .upload-card p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .upload-card input[type="file"] {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      .file-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 12px;
+        padding: 9px 12px;
+        border-radius: 999px;
+        background: #eef3f7;
+        color: var(--ink);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .toggle-row {
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface-soft);
+      }
+
+      .toggle {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 12px;
+        align-items: start;
+        width: 100%;
+        border: 0;
+        background: transparent;
+        padding: 0;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .toggle-box {
+        width: 22px;
+        height: 22px;
+        border: 1px solid #9eb0bc;
+        border-radius: 4px;
+        background: #fff;
+        display: grid;
+        place-items: center;
+        margin-top: 2px;
+      }
+
+      .toggle.active .toggle-box {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .toggle strong {
+        display: block;
+        font-size: 17px;
+      }
+
+      .toggle span {
+        display: block;
+        margin-top: 6px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .advanced {
+        display: grid;
+        gap: 16px;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+      }
+
+      .summary-body {
+        display: grid;
+        gap: 14px;
+      }
+
+      .summary-block {
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfcfd;
+      }
+
+      .summary-block strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      .summary-main {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+
+      .summary-sub {
+        margin-top: 6px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .summary-banner {
+        padding: 14px;
+        border: 1px solid #c9ded8;
+        border-radius: 8px;
+        background: #eef8f6;
+        line-height: 1.5;
+      }
+
+      .summary-banner strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 16px;
+      }
+
+      .helper {
+        padding: 14px;
+        border: 1px solid #efd0d0;
+        border-radius: 8px;
+        background: var(--alert-soft);
+        color: var(--alert);
+        line-height: 1.5;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 8px;
+      }
+
+      .button,
+      .secondary {
+        appearance: none;
+        border: 0;
+        border-radius: 999px;
+        padding: 13px 18px;
+        font: inherit;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .button {
+        background: var(--ink);
+        color: #fff;
+      }
+
+      .secondary {
+        background: #edf3f7;
+        color: var(--ink);
+      }
+
+      .success {
+        margin-top: 14px;
+        padding: 16px;
+        border: 1px solid #c9ded8;
+        border-radius: 8px;
+        background: #eef8f6;
+      }
+
+      .success strong {
+        display: block;
+        font-size: 20px;
+      }
+
+      .success p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      @media (max-width: 860px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .app {
+          padding: 16px 12px 28px;
+        }
+
+        .panel-head,
+        .panel-body,
+        .summary-head,
+        .summary-body {
+          padding: 16px;
+        }
+
+        .two-up,
+        .urgency-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .actions {
+          display: grid;
+        }
+
+        .button,
+        .secondary {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <div class="shell">
+        <header class="hero">
+          <p class="eyebrow">Web Requests</p>
+          <h1>Request a Website Update</h1>
+          <p>Keep the first step fast. The core request should take under a minute, with additional detail available only when the update needs more coordination.</p>
+        </header>
+
+        <div class="layout">
+          <section class="panel">
+            <div class="panel-head">
+              <h2>New request</h2>
+              <p>Start with the essentials. If this turns into a bigger update, open the additional fields below.</p>
+            </div>
+            <div class="panel-body">
+              <form id="request-form" class="field-grid">
+                <div>
+                  <label for="page-url">Page URL</label>
+                  <input id="page-url" name="page-url" type="url" placeholder="https://www.example.org/page-to-update" />
+                  <span class="field-note">Use the live page URL if the request is tied to an existing page.</span>
+                </div>
+
+                <div class="two-up">
+                  <div>
+                    <label for="requestor-email">Requestor email</label>
+                    <input id="requestor-email" name="requestor-email" type="email" placeholder="name@example.org" />
+                  </div>
+                  <div>
+                    <label for="request-type">Update type</label>
+                    <select id="request-type" name="request-type">
+                      <option>Content change</option>
+                      <option>Image or media swap</option>
+                      <option>Link or file update</option>
+                      <option>New page or section</option>
+                      <option>Bug or broken page</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="request-text">What needs to change?</label>
+                  <textarea id="request-text" name="request-text" placeholder="Describe the update clearly. Include the exact copy, placement, or content changes you need."></textarea>
+                </div>
+
+                <div>
+                  <label>Attach files</label>
+                  <div class="upload-card">
+                    <strong>Drop in a Word doc, PDF, or image</strong>
+                    <p>Use this for replacement copy, screenshots, marked-up layouts, or supporting assets.</p>
+                    <input id="attachment" type="file" accept=".doc,.docx,.pdf,image/*" />
+                    <div class="file-pill hidden" id="file-pill"></div>
+                  </div>
+                </div>
+
+                <div class="urgency-wrap">
+                  <label>Urgency</label>
+                  <div class="urgency-grid">
+                    <button class="urgency-option active" type="button" data-urgency="important">
+                      <strong>Important</strong>
+                      <span>Default turnaround: 3 business days</span>
+                    </button>
+                    <button class="urgency-option" type="button" data-urgency="urgent">
+                      <strong>Urgent</strong>
+                      <span>Target turnaround: 1 business day</span>
+                    </button>
+                  </div>
+                  <div class="urgency-help" id="urgency-help">
+                    Important is the default and means the update should be completed within 3 business days.
+                  </div>
+                  <div class="field-note">
+                    Please use <strong>Urgent</strong> carefully so web producers can stay responsive for true deadline-driven issues.
+                  </div>
+                </div>
+
+                <div class="toggle-row">
+                  <button class="toggle" id="advanced-toggle" type="button" aria-expanded="false">
+                    <span class="toggle-box" id="toggle-box">+</span>
+                    <span>
+                      <strong>This is a more complex update</strong>
+                      <span>Open more fields for multi-part requests, stakeholder context, deadlines, and implementation notes.</span>
+                    </span>
+                  </button>
+
+                  <div class="advanced hidden" id="advanced-fields">
+                    <div class="two-up">
+                      <div>
+                        <label for="section-name">Section or module affected</label>
+                        <input id="section-name" type="text" placeholder="Homepage hero, event details rail, footer module" />
+                      </div>
+                      <div>
+                        <label for="deadline">Requested publish date</label>
+                        <input id="deadline" type="date" />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label for="stakeholders">Who should review this?</label>
+                      <input id="stakeholders" type="text" placeholder="Comms team, producer, venue marketing, etc." />
+                    </div>
+
+                    <div>
+                      <label for="implementation-notes">Additional implementation notes</label>
+                      <textarea id="implementation-notes" placeholder="Add context about dependencies, layout concerns, timing, related pages, or anything that will help the web team execute accurately."></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="actions">
+                  <button class="button" type="submit">Submit request</button>
+                  <button class="secondary" type="reset" id="reset-button">Clear form</button>
+                </div>
+
+                <div class="success hidden" id="success-state">
+                  <strong>Request drafted</strong>
+                  <p>This prototype does not submit yet, but the UI and request structure are ready to wire into a real intake workflow.</p>
+                </div>
+              </form>
+            </div>
+          </section>
+
+          <aside class="summary">
+            <div class="summary-head">
+              <h2>What the web team will receive</h2>
+              <p>Keep this concise and complete. The cleaner the request, the faster someone can move on it.</p>
+            </div>
+            <div class="summary-body">
+              <div class="summary-block">
+                <strong>Request target</strong>
+                <div class="summary-main" id="summary-url">No page selected yet</div>
+                <div class="summary-sub" id="summary-email">Requestor email not added yet</div>
+              </div>
+
+              <div class="summary-block">
+                <strong>Urgency</strong>
+                <div class="summary-main" id="summary-urgency">Important</div>
+                <div class="summary-sub" id="summary-urgency-copy">Expected turnaround: 3 business days</div>
+              </div>
+
+              <div class="summary-block">
+                <strong>Update summary</strong>
+                <div class="summary-sub" id="summary-text">Describe the content, layout, or file change you need.</div>
+              </div>
+
+              <div class="summary-block">
+                <strong>Attachments</strong>
+                <div class="summary-sub" id="summary-file">No file added yet</div>
+              </div>
+
+              <div class="summary-banner">
+                <strong>Good requests move faster</strong>
+                Give the exact page, the exact change, and the exact file whenever possible.
+              </div>
+
+              <div class="helper">
+                Urgent requests should be reserved for high-impact changes with a real deadline or active site issue.
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const urgencyCopy = {
+        important: {
+          label: "Important",
+          copy: "Expected turnaround: 3 business days",
+          help: "Important is the default and means the update should be completed within 3 business days."
+        },
+        urgent: {
+          label: "Urgent",
+          copy: "Expected turnaround: 1 business day",
+          help: "Urgent means the update should be completed within 1 business day. Please use this carefully so web producers can focus on true deadline-driven requests."
+        }
+      };
+
+      const form = document.getElementById("request-form");
+      const pageUrl = document.getElementById("page-url");
+      const email = document.getElementById("requestor-email");
+      const requestText = document.getElementById("request-text");
+      const attachment = document.getElementById("attachment");
+      const filePill = document.getElementById("file-pill");
+      const urgencyButtons = document.querySelectorAll(".urgency-option");
+      const urgencyHelp = document.getElementById("urgency-help");
+      const advancedToggle = document.getElementById("advanced-toggle");
+      const advancedFields = document.getElementById("advanced-fields");
+      const toggleBox = document.getElementById("toggle-box");
+      const successState = document.getElementById("success-state");
+      const resetButton = document.getElementById("reset-button");
+
+      const summaryUrl = document.getElementById("summary-url");
+      const summaryEmail = document.getElementById("summary-email");
+      const summaryUrgency = document.getElementById("summary-urgency");
+      const summaryUrgencyCopy = document.getElementById("summary-urgency-copy");
+      const summaryText = document.getElementById("summary-text");
+      const summaryFile = document.getElementById("summary-file");
+
+      const state = {
+        urgency: "important",
+        advanced: false
+      };
+
+      function updateSummary() {
+        summaryUrl.textContent = pageUrl.value.trim() || "No page selected yet";
+        summaryEmail.textContent = email.value.trim() || "Requestor email not added yet";
+        summaryText.textContent = requestText.value.trim() || "Describe the content, layout, or file change you need.";
+        summaryUrgency.textContent = urgencyCopy[state.urgency].label;
+        summaryUrgencyCopy.textContent = urgencyCopy[state.urgency].copy;
+      }
+
+      function updateUrgency(value) {
+        state.urgency = value;
+        urgencyButtons.forEach((button) => {
+          button.classList.toggle("active", button.dataset.urgency === value);
+        });
+        urgencyHelp.textContent = urgencyCopy[value].help;
+        updateSummary();
+      }
+
+      function toggleAdvanced() {
+        state.advanced = !state.advanced;
+        advancedFields.classList.toggle("hidden", !state.advanced);
+        advancedToggle.classList.toggle("active", state.advanced);
+        advancedToggle.setAttribute("aria-expanded", state.advanced ? "true" : "false");
+        toggleBox.textContent = state.advanced ? "−" : "+";
+      }
+
+      pageUrl.addEventListener("input", updateSummary);
+      email.addEventListener("input", updateSummary);
+      requestText.addEventListener("input", updateSummary);
+
+      urgencyButtons.forEach((button) => {
+        button.addEventListener("click", () => updateUrgency(button.dataset.urgency));
+      });
+
+      advancedToggle.addEventListener("click", toggleAdvanced);
+
+      attachment.addEventListener("change", () => {
+        const file = attachment.files[0];
+        if (!file) {
+          filePill.classList.add("hidden");
+          filePill.textContent = "";
+          summaryFile.textContent = "No file added yet";
+          return;
+        }
+
+        filePill.classList.remove("hidden");
+        filePill.textContent = file.name;
+        summaryFile.textContent = file.name;
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        successState.classList.remove("hidden");
+      });
+
+      resetButton.addEventListener("click", () => {
+        window.setTimeout(() => {
+          updateUrgency("important");
+          if (state.advanced) toggleAdvanced();
+          filePill.classList.add("hidden");
+          filePill.textContent = "";
+          summaryFile.textContent = "No file added yet";
+          successState.classList.add("hidden");
+          updateSummary();
+        }, 0);
+      });
+
+      updateSummary();
+      updateUrgency("important");
+    </script>
+  </body>
+</html>
