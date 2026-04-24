@@ -222,7 +222,7 @@
 
       .urgency-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
       }
 
@@ -260,6 +260,11 @@
         background: var(--warn-soft);
         color: #6e5319;
         line-height: 1.5;
+      }
+
+      .launch-date {
+        display: grid;
+        gap: 8px;
       }
 
       .upload-card {
@@ -573,19 +578,27 @@
                 </div>
 
                 <div class="urgency-wrap">
-                  <label>Urgency</label>
+                  <label>Target Launch Date</label>
                   <div class="urgency-grid">
                     <button class="urgency-option active" type="button" data-urgency="important">
                       <strong>Important</strong>
-                      <span>Default turnaround: 3 business days</span>
+                      <span>Auto-set to 3 business days out</span>
                     </button>
                     <button class="urgency-option" type="button" data-urgency="urgent">
                       <strong>Urgent</strong>
-                      <span>Target turnaround: 1 business day</span>
+                      <span>Auto-set to 1 business day out</span>
+                    </button>
+                    <button class="urgency-option" type="button" data-urgency="specific">
+                      <strong>Specific date</strong>
+                      <span>Choose the exact target launch date</span>
                     </button>
                   </div>
+                  <div class="launch-date">
+                    <label for="target-launch-date">Launch date</label>
+                    <input id="target-launch-date" type="date" />
+                  </div>
                   <div class="urgency-help" id="urgency-help">
-                    Important is the default and means the update should be completed within 3 business days.
+                    Important is the default. It automatically sets the target launch date to 3 business days from today.
                   </div>
                   <div class="field-note">
                     Please use <strong>Urgent</strong> carefully so web producers can stay responsive for true deadline-driven issues.
@@ -602,15 +615,9 @@
                   </button>
 
                   <div class="advanced hidden" id="advanced-fields">
-                    <div class="two-up">
-                      <div>
-                        <label for="section-name">Section or module affected</label>
-                        <input id="section-name" type="text" placeholder="Homepage hero, event details rail, footer module" />
-                      </div>
-                      <div>
-                        <label for="deadline">Requested publish date</label>
-                        <input id="deadline" type="date" />
-                      </div>
+                    <div>
+                      <label for="section-name">Section or module affected</label>
+                      <input id="section-name" type="text" placeholder="Homepage hero, event details rail, footer module" />
                     </div>
 
                     <div>
@@ -651,9 +658,9 @@
               </div>
 
               <div class="summary-block">
-                <strong>Urgency</strong>
+                <strong>Target launch date</strong>
                 <div class="summary-main" id="summary-urgency">Important</div>
-                <div class="summary-sub" id="summary-urgency-copy">Expected turnaround: 3 business days</div>
+                <div class="summary-sub" id="summary-urgency-copy">Launch date will be set automatically.</div>
               </div>
 
               <div class="summary-block">
@@ -684,13 +691,18 @@
       const urgencyCopy = {
         important: {
           label: "Important",
-          copy: "Expected turnaround: 3 business days",
-          help: "Important is the default and means the update should be completed within 3 business days."
+          copy: "Auto-set from the standard 3-business-day turnaround.",
+          help: "Important is the default. It automatically sets the target launch date to 3 business days from today."
         },
         urgent: {
           label: "Urgent",
-          copy: "Expected turnaround: 1 business day",
+          copy: "Auto-set from the 1-business-day urgent turnaround.",
           help: "Urgent means the update should be completed within 1 business day. Please use this carefully so web producers can focus on true deadline-driven requests."
+        },
+        specific: {
+          label: "Specific date",
+          copy: "Chosen manually for a known launch date.",
+          help: "Use this when the request already has a confirmed target launch date."
         }
       };
 
@@ -703,6 +715,7 @@
       const urgencyButtons = document.querySelectorAll(".urgency-option");
       const modeButtons = document.querySelectorAll(".mode-option");
       const urgencyHelp = document.getElementById("urgency-help");
+      const targetLaunchDate = document.getElementById("target-launch-date");
       const advancedToggle = document.getElementById("advanced-toggle");
       const advancedFields = document.getElementById("advanced-fields");
       const toggleBox = document.getElementById("toggle-box");
@@ -723,8 +736,40 @@
       const state = {
         mode: "existing",
         urgency: "important",
-        advanced: false
+        advanced: false,
+        launchDate: ""
       };
+
+      function formatDateForInput(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      }
+
+      function formatDateForDisplay(value) {
+        if (!value) return "Launch date not set";
+        const [year, month, day] = value.split("-").map(Number);
+        const date = new Date(year, month - 1, day);
+        return date.toLocaleDateString(undefined, {
+          weekday: "short",
+          month: "short",
+          day: "numeric"
+        });
+      }
+
+      function addBusinessDays(startDate, days) {
+        const next = new Date(startDate);
+        let added = 0;
+        while (added < days) {
+          next.setDate(next.getDate() + 1);
+          const day = next.getDay();
+          if (day !== 0 && day !== 6) {
+            added += 1;
+          }
+        }
+        return next;
+      }
 
       function updateSummary() {
         const emptyTarget = state.mode === "existing" ? "No page selected yet" : "No new page request named yet";
@@ -732,7 +777,7 @@
         summaryEmail.textContent = email.value.trim() || "Requestor email not added yet";
         summaryText.textContent = requestText.value.trim() || "Describe the content, layout, or file change you need.";
         summaryUrgency.textContent = urgencyCopy[state.urgency].label;
-        summaryUrgencyCopy.textContent = urgencyCopy[state.urgency].copy;
+        summaryUrgencyCopy.textContent = `${formatDateForDisplay(state.launchDate)} • ${urgencyCopy[state.urgency].copy}`;
       }
 
       function updateMode(mode) {
@@ -764,6 +809,21 @@
           button.classList.toggle("active", button.dataset.urgency === value);
         });
         urgencyHelp.textContent = urgencyCopy[value].help;
+        if (value === "important") {
+          state.launchDate = formatDateForInput(addBusinessDays(new Date(), 3));
+          targetLaunchDate.value = state.launchDate;
+          targetLaunchDate.disabled = true;
+        } else if (value === "urgent") {
+          state.launchDate = formatDateForInput(addBusinessDays(new Date(), 1));
+          targetLaunchDate.value = state.launchDate;
+          targetLaunchDate.disabled = true;
+        } else {
+          targetLaunchDate.disabled = false;
+          if (!state.launchDate) {
+            state.launchDate = formatDateForInput(addBusinessDays(new Date(), 3));
+            targetLaunchDate.value = state.launchDate;
+          }
+        }
         updateSummary();
       }
 
@@ -781,6 +841,11 @@
 
       urgencyButtons.forEach((button) => {
         button.addEventListener("click", () => updateUrgency(button.dataset.urgency));
+      });
+
+      targetLaunchDate.addEventListener("input", () => {
+        state.launchDate = targetLaunchDate.value;
+        updateSummary();
       });
 
       modeButtons.forEach((button) => {
