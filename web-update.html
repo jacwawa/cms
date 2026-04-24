@@ -125,6 +125,44 @@
         gap: 14px;
       }
 
+      .request-mode {
+        display: grid;
+        gap: 10px;
+      }
+
+      .mode-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .mode-option {
+        width: 100%;
+        padding: 14px;
+        text-align: left;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        cursor: pointer;
+      }
+
+      .mode-option.active {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+
+      .mode-option strong {
+        display: block;
+        font-size: 17px;
+      }
+
+      .mode-option span {
+        display: block;
+        margin-top: 6px;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
       label {
         display: block;
         margin-bottom: 8px;
@@ -167,6 +205,7 @@
       input:focus,
       textarea:focus,
       select:focus,
+      .mode-option:focus-visible,
       .urgency-option:focus-visible,
       .toggle:focus-visible,
       .button:focus-visible,
@@ -480,9 +519,25 @@
             <div class="panel-body">
               <form id="request-form" class="field-grid">
                 <div>
-                  <label for="page-url">Page URL</label>
+                  <div class="request-mode">
+                    <label>What kind of request is this?</label>
+                    <div class="mode-grid">
+                      <button class="mode-option active" type="button" data-mode="existing">
+                        <strong>Update an existing page</strong>
+                        <span>Most requests start here.</span>
+                      </button>
+                      <button class="mode-option" type="button" data-mode="new">
+                        <strong>Need a new page?</strong>
+                        <span>Use this when the request is for something net new.</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="page-url" id="url-label">Page URL</label>
                   <input id="page-url" name="page-url" type="url" placeholder="https://www.example.org/page-to-update" />
-                  <span class="field-note">Use the live page URL if the request is tied to an existing page.</span>
+                  <span class="field-note" id="url-note">Use the live page URL if the request is tied to an existing page.</span>
                 </div>
 
                 <div class="two-up">
@@ -503,7 +558,7 @@
                 </div>
 
                 <div>
-                  <label for="request-text">What needs to change?</label>
+                  <label for="request-text" id="request-text-label">What needs to change?</label>
                   <textarea id="request-text" name="request-text" placeholder="Describe the update clearly. Include the exact copy, placement, or content changes you need."></textarea>
                 </div>
 
@@ -590,7 +645,7 @@
             </div>
             <div class="summary-body">
               <div class="summary-block">
-                <strong>Request target</strong>
+                <strong id="summary-target-label">Request target</strong>
                 <div class="summary-main" id="summary-url">No page selected yet</div>
                 <div class="summary-sub" id="summary-email">Requestor email not added yet</div>
               </div>
@@ -646,6 +701,7 @@
       const attachment = document.getElementById("attachment");
       const filePill = document.getElementById("file-pill");
       const urgencyButtons = document.querySelectorAll(".urgency-option");
+      const modeButtons = document.querySelectorAll(".mode-option");
       const urgencyHelp = document.getElementById("urgency-help");
       const advancedToggle = document.getElementById("advanced-toggle");
       const advancedFields = document.getElementById("advanced-fields");
@@ -655,22 +711,51 @@
 
       const summaryUrl = document.getElementById("summary-url");
       const summaryEmail = document.getElementById("summary-email");
+      const summaryTargetLabel = document.getElementById("summary-target-label");
       const summaryUrgency = document.getElementById("summary-urgency");
       const summaryUrgencyCopy = document.getElementById("summary-urgency-copy");
       const summaryText = document.getElementById("summary-text");
       const summaryFile = document.getElementById("summary-file");
+      const urlLabel = document.getElementById("url-label");
+      const urlNote = document.getElementById("url-note");
+      const requestTextLabel = document.getElementById("request-text-label");
 
       const state = {
+        mode: "existing",
         urgency: "important",
         advanced: false
       };
 
       function updateSummary() {
-        summaryUrl.textContent = pageUrl.value.trim() || "No page selected yet";
+        const emptyTarget = state.mode === "existing" ? "No page selected yet" : "No new page request named yet";
+        summaryUrl.textContent = pageUrl.value.trim() || emptyTarget;
         summaryEmail.textContent = email.value.trim() || "Requestor email not added yet";
         summaryText.textContent = requestText.value.trim() || "Describe the content, layout, or file change you need.";
         summaryUrgency.textContent = urgencyCopy[state.urgency].label;
         summaryUrgencyCopy.textContent = urgencyCopy[state.urgency].copy;
+      }
+
+      function updateMode(mode) {
+        state.mode = mode;
+        modeButtons.forEach((button) => {
+          button.classList.toggle("active", button.dataset.mode === mode);
+        });
+
+        if (mode === "existing") {
+          urlLabel.textContent = "Page URL";
+          urlNote.textContent = "Use the live page URL if the request is tied to an existing page.";
+          requestTextLabel.textContent = "What needs to change?";
+          pageUrl.placeholder = "https://www.example.org/page-to-update";
+          summaryTargetLabel.textContent = "Request target";
+        } else {
+          urlLabel.textContent = "New page name or destination";
+          urlNote.textContent = "If there is no live URL yet, add the planned page name, section, or where the new page should live.";
+          requestTextLabel.textContent = "What should the new page include?";
+          pageUrl.placeholder = "New donor page under Support, new venue page, new campaign landing page";
+          summaryTargetLabel.textContent = "New page request";
+        }
+
+        updateSummary();
       }
 
       function updateUrgency(value) {
@@ -696,6 +781,10 @@
 
       urgencyButtons.forEach((button) => {
         button.addEventListener("click", () => updateUrgency(button.dataset.urgency));
+      });
+
+      modeButtons.forEach((button) => {
+        button.addEventListener("click", () => updateMode(button.dataset.mode));
       });
 
       advancedToggle.addEventListener("click", toggleAdvanced);
@@ -732,6 +821,7 @@
       });
 
       updateSummary();
+      updateMode("existing");
       updateUrgency("important");
     </script>
   </body>
